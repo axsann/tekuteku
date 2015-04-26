@@ -4,11 +4,15 @@ import (
 	"fmt"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/go-martini/martini"
+	//"github.com/jinzhu/gorm"
+	//_ "github.com/go-sql-driver/mysql"
 	"net/http"
 	"strconv"
+	"time"
 )
 
-type FormVal struct {
+type ExperimentData struct {
+	ID           int
 	OnomName     string
 	OnomIndex    int
 	HijiKakudo   int
@@ -17,6 +21,15 @@ type FormVal struct {
 	AshiFuriHaba int
 	KoshiKakudo  int
 	Sokudo       int
+	PostedAt     string
+}
+
+type UserData struct {
+	ID        int
+	Name      string
+	Age       int
+	Gender    string
+	StartedAt string
 }
 
 type Onom struct {
@@ -44,6 +57,14 @@ func top(ren render.Render, req *http.Request) {
 }
 
 func firstPost(ren render.Render, req *http.Request) {
+	var userData UserData
+
+	userData.Name = req.FormValue("name")
+	userData.Age, _ = strconv.Atoi(req.FormValue("age"))
+	userData.Gender = req.FormValue("gender")
+	userData.StartedAt = time.Now().Format("2006-01-02 15:04:05")
+	//fmt.Println(subData.DateTimeStr)
+	fmt.Println(userData)
 	var onom Onom
 	onom.Index = 0
 	onom.Name = onoms[0]
@@ -51,19 +72,21 @@ func firstPost(ren render.Render, req *http.Request) {
 }
 
 func sinceSecondPost(ren render.Render, req *http.Request) {
-	var formVal FormVal
-	formVal.OnomName = req.FormValue("onom-name")
-	formVal.OnomIndex, _ = strconv.Atoi(req.FormValue("onom-index"))
-	formVal.HijiKakudo, _ = strconv.Atoi(req.FormValue("hiji-kakudo"))
-	formVal.UdeFuriHaba, _ = strconv.Atoi(req.FormValue("ude-furi"))
-	formVal.HizaMageHaba, _ = strconv.Atoi(req.FormValue("hiza-mage"))
-	formVal.AshiFuriHaba, _ = strconv.Atoi(req.FormValue("asi-furi"))
-	formVal.KoshiKakudo, _ = strconv.Atoi(req.FormValue("koshi-kakudo"))
-	formVal.Sokudo, _ = strconv.Atoi(req.FormValue("sokudo"))
-	fmt.Println(formVal)
+	var experimentData ExperimentData
+	experimentData.OnomName = req.FormValue("onom-name")
+	experimentData.OnomIndex, _ = strconv.Atoi(req.FormValue("onom-index"))
+	experimentData.HijiKakudo, _ = strconv.Atoi(req.FormValue("hiji-kakudo"))
+	experimentData.UdeFuriHaba, _ = strconv.Atoi(req.FormValue("ude-furi"))
+	experimentData.HizaMageHaba, _ = strconv.Atoi(req.FormValue("hiza-mage"))
+	experimentData.AshiFuriHaba, _ = strconv.Atoi(req.FormValue("asi-furi"))
+	experimentData.KoshiKakudo, _ = strconv.Atoi(req.FormValue("koshi-kakudo"))
+	experimentData.Sokudo, _ = strconv.Atoi(req.FormValue("sokudo"))
+	experimentData.PostedAt = time.Now().Format("2006-01-02 15:04:05")
+
+	fmt.Println(experimentData)
 
 	var onom Onom
-	presentIndex := formVal.OnomIndex + 1 // インデックス番号を1進める
+	presentIndex := experimentData.OnomIndex + 1 // インデックス番号を1進める
 	if presentIndex < len(onoms) {
 		onom.Index = presentIndex
 		onom.Name = onoms[presentIndex]

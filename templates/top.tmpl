@@ -8,12 +8,12 @@
   <script type="text/javascript">
     function check(){
       name = document.first_form.elements["name"].value;
-      if (!name.match( /^[ァ-ン]*$/ )) {
+      if (!name.match(/^[ァ-ロワヲンー]*$/)) {
         alert("名前はカタカナでご記入ください。\n姓と名の間には、空白を入れずに詰めてご記入ください。");
         return false;
       }
 
-      if(window.confirm('送信してよろしいですか？')){ // 確認ダイアログを表示
+      if(window.confirm('送信してもよろしいですか？')){ // 確認ダイアログを表示
         return true; // 「OK」時は送信を実行
       }
       else{ // 「キャンセル」時の処理
@@ -32,8 +32,8 @@
       <label for="age">あなたの年齢：</label>
       <input type="number" name="age" min="1" max="100" autocomplete="off" required="required"/><br>
       <label for="gender">あなたの性別：</label>
-      <input type="radio" name="gender" value="1" required="required" />男　
-      <input type="radio" name="gender" value="2" required="required" />女
+      <input type="radio" name="gender" value="male" required="required" />男　
+      <input type="radio" name="gender" value="female" required="required" />女
       <div class="submit"><input type="submit" name="submit" value="送信" /></div>
     </div>
   </form>
