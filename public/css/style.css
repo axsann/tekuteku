@@ -15,11 +15,11 @@
 	  margin-left: auto;
 	  margin-right: auto;
 	}
-	input[type="number"]{
+	input[type="number"] {
 	  width: 40px;
 	}
 
-  input[type="submit"]{
+  input[type="submit"], input[type="button"] {
     font-size: 1.2em;
     border: none;
   }
@@ -29,7 +29,7 @@
     width: 400px;
   }
 
-  .submit {
+  .button {
     padding: 30px 0;
     text-align: center;
 	}
@@ -37,20 +37,26 @@
   h2 {
     text-align: center;
   }
-  
+
   p {
     text-align: center;
   }
 
+  .description {
+    width: 800px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
 	.slider90 {
-	  width: 200px;
+	  width: 225px;
 	  display: inline-block;
 	  /*_display: inline;*/
 	  margin-left: 10px;
 	  margin-right: 10px;
 	}
   .slider60 {
-	  width: 133px;
+	  width: 150px;
 	  display: inline-block;
 	  /*_display: inline;*/
 	  margin-left: 10px;
@@ -58,7 +64,7 @@
 	}
 
   .slider150 {
-    width: 333px;
+    width: 375px;
     display: inline-block;
     /*_display: inline;*/
     margin-left: 10px;

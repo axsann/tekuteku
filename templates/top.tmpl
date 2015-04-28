@@ -25,16 +25,16 @@
 </head>
 <body>
   <h2>てくてくへようこそ</h2>
-  <form name="first_form" action="/first_post" method="post" onSubmit="return check()">
+  <form name="first_form" id="first_form" action="/tutrial" method="post" onSubmit="return check()">
     <div class="inputs">
       <label for="name">あなたの名前（カタカナ）：</label>
-      <input type="text" name="name" autocomplete="off" required="required"/><br>
+      <input type="text" name="name" id="name" autocomplete="off" required="required"/><br>
       <label for="age">あなたの年齢：</label>
       <input type="number" name="age" min="1" max="100" autocomplete="off" required="required"/><br>
       <label for="gender">あなたの性別：</label>
       <input type="radio" name="gender" value="male" required="required" />男　
       <input type="radio" name="gender" value="female" required="required" />女
-      <div class="submit"><input type="submit" name="submit" value="送信" /></div>
+      <div class="button"><input type="submit" id="submit" name="submit" value="送信" /></div>
     </div>
   </form>
 </body>

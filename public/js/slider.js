@@ -60,19 +60,18 @@ $(document).ready( function() {
     });
     $( "#koshi-kakudo" ).val( $( "#koshi-kakudo-slider" ).slider( "value" ) );
 
-    // sokudo-slider
     /*
+    // sokudo-slider
     $( "#sokudo-slider" ).slider({
-      value: 20,
-      min: 2,
-      max: 60,
-      step: 2,
+      value: 4.0,
+      min: 1.0,
+      max: 7.0,
+      step: 0.1,
       slide: function( event, ui ) {
         $( "#sokudo" ).val( ui.value );
       }
     });
     $( "#sokudo" ).val( $( "#sokudo-slider" ).slider( "value" ) );
     */
-
 
 } );

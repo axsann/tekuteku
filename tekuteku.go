@@ -22,6 +22,7 @@ type ExperimentData struct {
 	KoshiKakudo  int
 	Sokudo       int
 	PostedAt     string
+	UserID       int
 }
 
 type UserData struct {
@@ -38,16 +39,17 @@ type Onom struct {
 }
 
 var onoms = [...]string{"てくてく", "すたすた", "のろのろ"}
+var userID = 1111 // 初期化
 
 func main() {
-
 	m := martini.Classic()
 
 	// render html template
 	m.Use(render.Renderer())
 	m.Get("/", top)
-	m.Post("/first_post", firstPost)
-	m.Post("/since_second_post", sinceSecondPost)
+	m.Post("/tutrial", tutrial)
+	m.Get("/first", first)
+	m.Post("/since_second", sinceSecond)
 	m.Run()
 
 }
@@ -56,22 +58,28 @@ func top(ren render.Render, req *http.Request) {
 	ren.HTML(200, "top", nil)
 }
 
-func firstPost(ren render.Render, req *http.Request) {
+func tutrial(ren render.Render, req *http.Request) {
 	var userData UserData
-
 	userData.Name = req.FormValue("name")
 	userData.Age, _ = strconv.Atoi(req.FormValue("age"))
 	userData.Gender = req.FormValue("gender")
 	userData.StartedAt = time.Now().Format("2006-01-02 15:04:05")
-	//fmt.Println(subData.DateTimeStr)
 	fmt.Println(userData)
+	userID = 2222 // デバッグ用
+	//var onom Onom
+	//onom.Index = 0
+	//onom.Name = onoms[0]
+	ren.HTML(200, "tutrial", nil)
+}
+
+func first(ren render.Render, req *http.Request) {
 	var onom Onom
 	onom.Index = 0
 	onom.Name = onoms[0]
 	ren.HTML(200, "tekuteku", onom)
 }
 
-func sinceSecondPost(ren render.Render, req *http.Request) {
+func sinceSecond(ren render.Render, req *http.Request) {
 	var experimentData ExperimentData
 	experimentData.OnomName = req.FormValue("onom-name")
 	experimentData.OnomIndex, _ = strconv.Atoi(req.FormValue("onom-index"))
