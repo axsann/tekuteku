@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/go-martini/martini"
-	//"github.com/jinzhu/gorm"
 	//_ "github.com/go-sql-driver/mysql"
+	//"github.com/jinzhu/gorm"
 	"net/http"
 	"strconv"
 	"time"
@@ -38,6 +38,7 @@ type Onom struct {
 	Name  string
 }
 
+//var db gorm.DB
 var onoms = [...]string{"てくてく", "すたすた", "のろのろ"}
 var userID = 1111 // 初期化
 
