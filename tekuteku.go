@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/go-martini/martini"
-	//_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	//"github.com/jinzhu/gorm"
 	"net/http"
 	"strconv"
 	"time"
 )
 
-type ExperimentData struct {
+type Experiment struct {
 	ID           int
-	OnomName     string
+	OnomName     string `sql:"size:20"`
 	OnomIndex    int
 	HijiKakudo   int
 	UdeFuriHaba  int
@@ -21,16 +21,16 @@ type ExperimentData struct {
 	AshiFuriHaba int
 	KoshiKakudo  int
 	Sokudo       int
-	PostedAt     string
-	UserID       int
+	CreatedAt    time.Time
+	UserID       int `sql:"index"`
 }
 
-type UserData struct {
+type User struct {
 	ID        int
-	Name      string
+	Name      string `sql:"size:30"`
 	Age       int
-	Gender    string
-	StartedAt string
+	Gender    string `sql:"size:10"`
+	CreatedAt time.Time
 }
 
 type Onom struct {
@@ -38,7 +38,6 @@ type Onom struct {
 	Name  string
 }
 
-//var db gorm.DB
 var onoms = [...]string{"てくてく", "すたすた", "のろのろ"}
 var userID = 1111 // 初期化
 
@@ -60,12 +59,12 @@ func top(ren render.Render, req *http.Request) {
 }
 
 func tutrial(ren render.Render, req *http.Request) {
-	var userData UserData
-	userData.Name = req.FormValue("name")
-	userData.Age, _ = strconv.Atoi(req.FormValue("age"))
-	userData.Gender = req.FormValue("gender")
-	userData.StartedAt = time.Now().Format("2006-01-02 15:04:05")
-	fmt.Println(userData)
+	var user User
+	user.Name = req.FormValue("name")
+	user.Age, _ = strconv.Atoi(req.FormValue("age"))
+	user.Gender = req.FormValue("gender")
+	user.CreatedAt = time.Now()
+	fmt.Println(user)
 	userID = 2222 // デバッグ用
 	//var onom Onom
 	//onom.Index = 0
@@ -81,21 +80,21 @@ func first(ren render.Render, req *http.Request) {
 }
 
 func sinceSecond(ren render.Render, req *http.Request) {
-	var experimentData ExperimentData
-	experimentData.OnomName = req.FormValue("onom-name")
-	experimentData.OnomIndex, _ = strconv.Atoi(req.FormValue("onom-index"))
-	experimentData.HijiKakudo, _ = strconv.Atoi(req.FormValue("hiji-kakudo"))
-	experimentData.UdeFuriHaba, _ = strconv.Atoi(req.FormValue("ude-furi"))
-	experimentData.HizaMageHaba, _ = strconv.Atoi(req.FormValue("hiza-mage"))
-	experimentData.AshiFuriHaba, _ = strconv.Atoi(req.FormValue("asi-furi"))
-	experimentData.KoshiKakudo, _ = strconv.Atoi(req.FormValue("koshi-kakudo"))
-	experimentData.Sokudo, _ = strconv.Atoi(req.FormValue("sokudo"))
-	experimentData.PostedAt = time.Now().Format("2006-01-02 15:04:05")
+	var experiment Experiment
+	experiment.OnomName = req.FormValue("onom-name")
+	experiment.OnomIndex, _ = strconv.Atoi(req.FormValue("onom-index"))
+	experiment.HijiKakudo, _ = strconv.Atoi(req.FormValue("hiji-kakudo"))
+	experiment.UdeFuriHaba, _ = strconv.Atoi(req.FormValue("ude-furi"))
+	experiment.HizaMageHaba, _ = strconv.Atoi(req.FormValue("hiza-mage"))
+	experiment.AshiFuriHaba, _ = strconv.Atoi(req.FormValue("asi-furi"))
+	experiment.KoshiKakudo, _ = strconv.Atoi(req.FormValue("koshi-kakudo"))
+	experiment.Sokudo, _ = strconv.Atoi(req.FormValue("sokudo"))
+	experiment.CreatedAt = time.Now()
 
-	fmt.Println(experimentData)
+	fmt.Println(experiment)
 
 	var onom Onom
-	presentIndex := experimentData.OnomIndex + 1 // インデックス番号を1進める
+	presentIndex := experiment.OnomIndex + 1 // インデックス番号を1進める
 	if presentIndex < len(onoms) {
 		onom.Index = presentIndex
 		onom.Name = onoms[presentIndex]
