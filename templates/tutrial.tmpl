@@ -28,7 +28,6 @@
 </head>
 
 <body>
-  {{.ShuffledOnoms}}
   <h2>動作の確認</h2>
   <p class="description">スライダーを動かして、棒人間の動作の変化を確認してください。<br>
     すべての動作が確認できましたら、<br>「実験本番へ進む」ボタンを押して、実験本番へ進んでください。</p>
@@ -97,7 +96,7 @@
     </table>
     <input type="hidden" name="user-id" value="{{.UserID}}" />
     {{range $index, $onom := .ShuffledOnoms}}
-    <input type="hidden" name="onoms[]" value="{{$onom}}">
+    <input type="hidden" name="shuffled-onoms[]" value="{{$onom}}">
     {{end}}
     <div class="button"><input type="submit" name="submit" value="送信" /></div>
   </form>

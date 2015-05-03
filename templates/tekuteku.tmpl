@@ -96,6 +96,9 @@
     <input type="hidden" name="onom-index" value="{{.CurrentOnom.Index}}" />
     <input type="hidden" name="onom-name" value="{{.CurrentOnom.Name}}" />
     <input type="hidden" name="user-id" value="{{.UserID}}" />
+    {{range $index, $onom := .ShuffledOnoms}}
+    <input type="hidden" name="shuffled-onoms[]" value="{{$onom}}">
+    {{end}}
     <div class="button"><input type="submit" name="submit" value="送信" /></div>
   </form>
 </body>
