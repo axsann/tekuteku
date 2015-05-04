@@ -16,22 +16,21 @@
   <script src="./js/slider.js" type="text/javascript"></script>
   <script src="./js/sketch.js" type="text/javascript"></script>
   <script type="text/javascript">
-    function check(){
-    	if(window.confirm('送信してもよろしいですか？')){ // 確認ダイアログを表示
-    		return true; // 「OK」時は送信を実行
-    	}
-    	else{ // 「キャンセル」時の処理
-    		//window.alert('キャンセルされました'); // 警告ダイアログを表示
-    		return false; // 送信を中止
-    	}
+    function hideExtraForm() {
+      document.getElementById('extra-form').style.display = "none";
     }
+    function showExtraForm(){
+      document.getElementById('extra-form').style.display = "";
+      document.getElementById('show-link').style.display = "none";
+    }
+    window.onload = hideExtraForm;
   </script>
 </head>
 
 <body>
-  <h2>{{.CurrentOnom.Name}}</h2>
+  <h2>「{{.CurrentOnom.Name}}」のイメージに合うようにパラメータを設定してください</h2>
   <div id="p5container"></div>
-  <form action="/since_second" method="post" onSubmit="return check()">
+  <form action="/since_second" method="post" >
     <table>
       <tr>
         <td>
@@ -99,7 +98,17 @@
     {{range $index, $onom := .ShuffledOnoms}}
     <input type="hidden" name="shuffled-onoms[]" value="{{$onom}}">
     {{end}}
-    <div class="button"><input type="submit" name="submit" value="送信" /></div>
+    <div id="show-link" style="text-align:center;padding:20px;"><a href="javascript:void(0);" onclick="showExtraForm();" style="color:#bbb;">送信ボタンを表示する</a></div>
+    <div id="extra-form" style="text-align:center;">
+      <h3>イメージ通りに設定できたと思いますか？</h3>
+      <input type="radio" name="feeling" value="1" required="required" />全くそう思わない
+      <input type="radio" name="feeling" value="2" required="required" />そう思わない
+      <input type="radio" name="feeling" value="3" required="required" />あまりそう思わない
+      <input type="radio" name="feeling" value="4" required="required" />ややそう思う
+      <input type="radio" name="feeling" value="5" required="required" />そう思う
+      <input type="radio" name="feeling" value="6" required="required" />とてもそう思う
+      <div class="button"><input type="submit" name="submit" value="送信" /></div>
+    </div>
   </form>
 </body>
 

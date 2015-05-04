@@ -20,7 +20,7 @@ var i = 0.0;
 
 function setup() {
   frameRate(30);
-  my_canvas = createCanvas(800, 400);
+  my_canvas = createCanvas(800, 350);
   my_canvas.parent("p5container");
   textSize(32);
   fill(0);

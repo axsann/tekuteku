@@ -24,6 +24,7 @@ type Experiment struct {
 	AshiFuriHaba int
 	KoshiKakudo  int
 	Sokudo       int
+	Feeling      int
 	CreatedAt    time.Time // gormによって自動で作成日時がDBに格納される
 	UserID       int       `sql:"index"` // 被験者ID(ユーザID)
 }
@@ -53,7 +54,7 @@ type SubData struct {
 
 var db gorm.DB // グローバル変数としてgorm.DBを宣言
 // 実験に用いるオノマトペ
-var onoms = []string{"てくてく", "すたすた", "のろのろ"}
+var onoms = []string{"てくてく", "すたすた", "のろのろ", "とぼとぼ"}
 
 // DBと接続、DBのMigrate(自動設定)
 func init() {
@@ -110,7 +111,6 @@ func tutrial(ren render.Render, req *http.Request) {
 func first(ren render.Render, req *http.Request) {
 	req.ParseForm()                               // req.Formの取得のためにパース
 	shuffledOnoms := req.Form["shuffled-onoms[]"] // シャッフルしたオノマトペを取得
-
 	var subData SubData
 	subData.UserID, _ = strconv.Atoi(req.FormValue("user-id")) // subDataにユーザIDを格納
 	subData.ShuffledOnoms = shuffledOnoms                      // subDataにシャッフルしたオノマトペを格納
@@ -134,7 +134,9 @@ func sinceSecond(ren render.Render, req *http.Request) {
 	experiment.AshiFuriHaba, _ = strconv.Atoi(req.FormValue("asi-furi"))
 	experiment.KoshiKakudo, _ = strconv.Atoi(req.FormValue("koshi-kakudo"))
 	experiment.Sokudo, _ = strconv.Atoi(req.FormValue("sokudo"))
-	experiment.UserID, _ = strconv.Atoi(req.FormValue("user-id"))
+	experiment.Feeling, _ = strconv.Atoi(req.FormValue("feeling"))
+	userID, _ := strconv.Atoi(req.FormValue("user-id"))
+	experiment.UserID = userID
 
 	// DBのexperimentsテーブルに実験データを格納
 	db.NewRecord(experiment)
@@ -148,13 +150,17 @@ func sinceSecond(ren render.Render, req *http.Request) {
 		onom.Name = shuffledOnoms[currentIndex]
 
 		var subData SubData
-		subData.CurrentOnom = onom                                 // subDataにオノマトペを格納
-		subData.UserID, _ = strconv.Atoi(req.FormValue("user-id")) // subDataにユーザIDを格納
-		subData.ShuffledOnoms = shuffledOnoms                      // subDataにシャッフルしたオノマトペを格納
+		subData.CurrentOnom = onom            // subDataにオノマトペを格納
+		subData.UserID = userID               // subDataにユーザIDを格納
+		subData.ShuffledOnoms = shuffledOnoms // subDataにシャッフルしたオノマトペを格納
 
 		ren.HTML(200, "tekuteku", subData)
 	} else { // すべてのオノマトペが終わったら終了ページを表示する
 		fmt.Println("おわり")
+		var me User
+		db.Where("id = ?", userID).First(&me)
+		me.Finished = true
+		db.Save(&me)
 		ren.HTML(200, "end", nil)
 	}
 }
