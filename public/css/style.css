@@ -48,6 +48,19 @@
     margin: 0 auto;
   }
 
+  .extra-form {
+    text-align: center;
+  }
+
+  .show-link-div {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .show-link-a {
+    color: #bbb;
+  }
+
 	.slider90 {
 	  width: 225px;
 	  display: inline-block;

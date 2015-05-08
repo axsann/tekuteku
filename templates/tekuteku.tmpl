@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title>Tekuteku</title>
   <link rel="stylesheet" href="./css/jquery-ui.css" />
   <link rel="stylesheet" href="./css/style.css" />
@@ -95,18 +95,15 @@
     <input type="hidden" name="onom-index" value="{{.CurrentOnom.Index}}" />
     <input type="hidden" name="onom-name" value="{{.CurrentOnom.Name}}" />
     <input type="hidden" name="user-id" value="{{.UserID}}" />
-    {{range $index, $onom := .ShuffledOnoms}}
-    <input type="hidden" name="shuffled-onoms[]" value="{{$onom}}">
+    {{range $index, $onomString := .ShuffledOnomStrings}}
+    <input type="hidden" name="shuffled-onom-strings[]" value="{{$onomString}}">
     {{end}}
-    <div id="show-link" style="text-align:center;padding:20px;"><a href="javascript:void(0);" onclick="showExtraForm();" style="color:#bbb;">送信ボタンを表示する</a></div>
-    <div id="extra-form" style="text-align:center;">
+    <div id="show-link" class="show-link-div"><a href="javascript:void(0);" onclick="showExtraForm();" class="show-link-a">送信ボタンを表示する</a></div>
+    <div id="extra-form" class="extra-form">
       <h3>イメージ通りに設定できたと思いますか？</h3>
-      <input type="radio" name="feeling" value="1" required="required" />全くそう思わない
-      <input type="radio" name="feeling" value="2" required="required" />そう思わない
-      <input type="radio" name="feeling" value="3" required="required" />あまりそう思わない
-      <input type="radio" name="feeling" value="4" required="required" />ややそう思う
-      <input type="radio" name="feeling" value="5" required="required" />そう思う
-      <input type="radio" name="feeling" value="6" required="required" />とてもそう思う
+      {{range $index, $feelString := .FeelStrings}}
+      <input type="radio" name="feeling" value="{{add $index 1}}" required="required" />{{$feelString}}
+      {{end}}
       <div class="button"><input type="submit" name="submit" value="送信" /></div>
     </div>
   </form>

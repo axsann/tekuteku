@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title>Tekuteku</title>
   <link rel="stylesheet" href="./css/jquery-ui.css" />
   <link rel="stylesheet" href="./css/style.css" />
@@ -95,8 +95,8 @@
       </tr>
     </table>
     <input type="hidden" name="user-id" value="{{.UserID}}" />
-    {{range $index, $onom := .ShuffledOnoms}}
-    <input type="hidden" name="shuffled-onoms[]" value="{{$onom}}">
+    {{range $index, $onomString := .ShuffledOnomStrings}}
+    <input type="hidden" name="shuffled-onom-strings[]" value="{{$onomString}}">
     {{end}}
     <div class="button"><input type="submit" name="submit" value="実験本番へ進む" /></div>
   </form>
